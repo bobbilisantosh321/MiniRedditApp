@@ -21,7 +21,6 @@
         android:orientation="horizontal"
         android:padding="5dip">
 
-        <!-- Left Thumbnail image -->
 
         <ImageView
             android:id="@+id/img_thumbnail"
@@ -34,7 +33,6 @@
             app:thumbnail="@{redditNewsItem.thumbnail}"
             android:onClick="@{clickHandler.onClick}"/>
 
-        <!-- Description -->
 
         <TextView
             android:id="@+id/description"
@@ -49,7 +47,6 @@
             android:text="@{redditNewsItem.title}"
             />
 
-        <!-- Author -->
 
         <TextView
             android:id="@+id/author"
@@ -63,39 +60,34 @@
             tools:ignore="SmallSp"
             tools:text="@{`Author: ` + redditNewsItem.author}" />
 
-        <!-- Comments -->
 
         <TextView
             android:id="@+id/comments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/author"
-            android:layout_alignRight="@+id/author"
-            android:layout_below="@+id/description"
-            android:gravity="right"
-            android:textColor="#10bcc9"
+            android:layout_alignLeft="@+id/author"
+            android:layout_alignStart="@+id/author"
+            android:layout_below="@+id/author"
+            android:textColor="#276337"
             android:textSize="10sp"
             android:textStyle="bold"
             tools:ignore="SmallSp"
             android:text="@{`Comments: ` + String.valueOf(redditNewsItem.numberOfComments)}"
             />
 
-        <!-- Time -->
 
         <TextView
             android:id="@+id/time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/author"
-            android:layout_alignStart="@+id/author"
-            android:layout_below="@+id/author"
+            android:layout_alignEnd="@+id/author"
+            android:layout_alignRight="@+id/author"
+            android:gravity="right"
+            android:layout_below="@+id/description"
             android:textColor="#343434"
             android:textSize="10sp"
             tools:ignore="SmallSp"
             tools:text="@{String.valueOf(redditNewsItem.createDate)}"
              />
-
-
-
     </RelativeLayout>
 </layout>
