@@ -1,93 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="redditNewsItem"
-            type="com.santosh.miniredditapp.data.RedditNewsData"/>
+            type="com.santosh.miniredditapp.data.RedditNewsData" />
 
         <variable
             name="clickHandler"
-            type="com.santosh.miniredditapp.databinder.OnClickHandler"/>
+            type="com.santosh.miniredditapp.databinder.OnClickHandler" />
+
+        <variable
+            name="dateConvertorHandler"
+            type="com.santosh.miniredditapp.databinder.CreatedTimeConvertorHandler" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="5dip">
+        android:orientation="vertical">
 
-
-        <ImageView
-            android:id="@+id/img_thumbnail"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="10dp"
-            app:thumbnail="@{redditNewsItem.thumbnail}"
-            android:onClick="@{clickHandler.onClick}"/>
-
-
-        <TextView
-            android:id="@+id/description"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/img_thumbnail"
-            android:layout_toRightOf="@+id/img_thumbnail"
-            android:textColor="#040404"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:typeface="sans"
-            android:text="@{redditNewsItem.title}"
-            />
+            android:onClick="@{clickHandler.onClick}"
+            android:orientation="horizontal"
+            android:padding="5dip">
 
 
-        <TextView
-            android:id="@+id/author"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/description"
-            android:layout_alignStart="@+id/description"
-            android:layout_below="@+id/description"
-            android:textColor="#343434"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            tools:text="@{`Author: ` + redditNewsItem.author}" />
+            <ImageView
+                android:id="@+id/img_thumbnail"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                app:thumbnail="@{redditNewsItem.thumbnail}" />
 
 
-        <TextView
-            android:id="@+id/comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/author"
-            android:layout_alignStart="@+id/author"
-            android:layout_below="@+id/author"
-            android:textColor="#276337"
-            android:textSize="10sp"
-            android:textStyle="bold"
-            tools:ignore="SmallSp"
-            android:text="@{`Comments: ` + String.valueOf(redditNewsItem.numberOfComments)}"
-            />
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/img_thumbnail"
+                android:layout_toRightOf="@+id/img_thumbnail"
+                android:text="@{redditNewsItem.title}"
+                android:textColor="#040404"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
 
 
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/author"
-            android:layout_alignRight="@+id/author"
-            android:gravity="right"
-            android:layout_below="@+id/description"
-            android:textColor="#343434"
-            android:textSize="10sp"
-            tools:ignore="SmallSp"
-            tools:text="@{String.valueOf(redditNewsItem.createDate)}"
-             />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/author"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/description"
+                android:layout_alignStart="@+id/description"
+                android:layout_below="@+id/description"
+                android:textColor="#343434"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                tools:text="@{`Author: ` + redditNewsItem.author}" />
+
+
+            <TextView
+                android:id="@+id/comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/author"
+                android:layout_alignStart="@+id/author"
+                android:layout_below="@+id/author"
+                android:text="@{`Comments: ` + String.valueOf(redditNewsItem.numberOfComments)}"
+                android:textColor="@color/comments_color"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:ignore="SmallSp" />
+
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/author"
+                android:layout_alignRight="@+id/author"
+                android:layout_below="@+id/description"
+                android:gravity="right"
+                android:textColor="@color/time_color"
+                android:textSize="10sp"
+                tools:ignore="SmallSp"
+                tools:text="@{dateConvertorHandler.convertEpochToHumanReadableTime()}" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:alpha="0.8"
+            android:background="@color/row_saparator" />
+
+
+    </LinearLayout>
+
+
 </layout>

@@ -5,4 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBlack">#000000</color>
     <color name="colorGrey">#808080</color>
+    <color name="white">#FFFFFF</color>
+    <color name="time_color">#343434</color>
+    <color name="row_saparator">#bab4b4</color>
+    <color name="comments_color">#FFA500</color>
 </resources>

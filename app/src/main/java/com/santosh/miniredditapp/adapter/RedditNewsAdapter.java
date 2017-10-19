@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.santosh.miniredditapp.R;
 import com.santosh.miniredditapp.data.RedditChildrenResponseData;
+import com.santosh.miniredditapp.databinder.CreatedTimeConvertorHandler;
 import com.santosh.miniredditapp.databinder.OnClickHandler;
 import com.santosh.miniredditapp.databinding.RedditNewsDataRowItemBinding;
 import com.santosh.miniredditapp.util.UserFriendlyTimeConverterUtil;
@@ -19,12 +20,9 @@ public class RedditNewsAdapter extends RecyclerView.Adapter<RedditNewsAdapter.Re
 
     private List<RedditChildrenResponseData> redditResponseDataList;
     private Context context;
-    private UserFriendlyTimeConverterUtil userFriendlyTimeConverterUtil;
-
 
     public RedditNewsAdapter(Context context) {
         this.context = context;
-        userFriendlyTimeConverterUtil = UserFriendlyTimeConverterUtil.getInstance();
     }
 
     public void setRedditNewResponse(List<RedditChildrenResponseData> redditResponseDataList){
@@ -44,7 +42,6 @@ public class RedditNewsAdapter extends RecyclerView.Adapter<RedditNewsAdapter.Re
     public void onBindViewHolder(RedditNewsViewHolder holder, int position) {
         final RedditChildrenResponseData responseData = redditResponseDataList.get(position);
         holder.update(responseData);
-        holder.dateAndTime.setText(userFriendlyTimeConverterUtil.getTimeAgo(responseData.getRedditNewsData().getCreateDate()));
     }
 
     @Override
@@ -54,7 +51,6 @@ public class RedditNewsAdapter extends RecyclerView.Adapter<RedditNewsAdapter.Re
 
     public static class RedditNewsViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView dateAndTime;
         RedditNewsDataRowItemBinding binding;
         Context context;
 
@@ -62,12 +58,12 @@ public class RedditNewsAdapter extends RecyclerView.Adapter<RedditNewsAdapter.Re
             super(binding.getRoot());
             this.binding = binding;
             this.context = context;
-            dateAndTime = (TextView) itemView.findViewById(R.id.time);
         }
 
         public void update(RedditChildrenResponseData redditNewResponse){
             binding.setRedditNewsItem(redditNewResponse.getRedditNewsData());
             binding.setClickHandler(new OnClickHandler(redditNewResponse.getRedditNewsData(), context));
+            binding.setDateConvertorHandler(new CreatedTimeConvertorHandler(redditNewResponse.getRedditNewsData()));
             binding.executePendingBindings();
         }
     }

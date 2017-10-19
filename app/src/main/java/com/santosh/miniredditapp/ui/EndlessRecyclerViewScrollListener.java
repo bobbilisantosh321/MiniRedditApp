@@ -17,14 +17,13 @@ public class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollList
     private int firstVisibleItem = 0;
     private int visibleItemCount = 0;
     private int totalItemCount = 0;
+    private int pageCounter = 0;
 
     public EndlessRecyclerViewScrollListener(RedditNewResponse redditNewResponse, LinearLayoutManager linearLayoutManager, CallNextPageListener callNextPageListener) {
         this.linearLayoutManager = linearLayoutManager;
         this.callNextPageListener = callNextPageListener;
         this.redditNewResponse = redditNewResponse;
     }
-
-
 
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -43,7 +42,9 @@ public class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollList
             }
 
             if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
-                recyclerView.getAdapter().notifyDataSetChanged();
+                pageCounter++;
+                //Restriciting pagesize to 5 as per the requirement : create a simple Reddit client that shows the top 50 entries
+                if(pageCounter <= 4)
                 callNextPageListener.callNextPage(redditNewResponse);
                 loading = true;
             }

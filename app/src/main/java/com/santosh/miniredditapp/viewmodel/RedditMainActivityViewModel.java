@@ -18,6 +18,7 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
     private String EMPTY_AFTER = "";
 
     public RedditAPIService redditAPIService;
+    private RedditNewResponse redditNewResponse;
 
     @Inject
     public ILoadmoreRedditItemsModel loadmoreRedditItemsModel;
@@ -46,8 +47,11 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
                                         throwable ->view.error()));
     }
 
-    private void loadMoreNewsItems(RedditNewResponse responseList, String after){
 
+
+    public void loadMoreNewsItems(RedditNewResponse responseList, String after){
+
+        redditNewResponse = responseList;
         if(after.isEmpty()){
             loadmoreRedditItemsModel.setMoreRedditItems(responseList);
             view.load(responseList);
@@ -59,7 +63,6 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
             response.getRedditResponseData().setAfter(after);
             view.loadMore();
         }
-
-
     }
+
 }

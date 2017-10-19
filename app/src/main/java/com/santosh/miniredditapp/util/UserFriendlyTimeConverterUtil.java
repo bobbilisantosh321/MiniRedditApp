@@ -2,6 +2,8 @@ package com.santosh.miniredditapp.util;
 
 public class UserFriendlyTimeConverterUtil {
 
+    //Util class to convert EPOCH time to human readable time
+
     private static UserFriendlyTimeConverterUtil instance;
 
     private UserFriendlyTimeConverterUtil() {
@@ -21,7 +23,7 @@ public class UserFriendlyTimeConverterUtil {
     private static final int HOUR_MILLIS = 60 * MINUTE_MILLIS;
     private static final int DAY_MILLIS = 24 * HOUR_MILLIS;
     private static final int MONTHS_MILLIS = 30 * DAY_MILLIS;
-    private static final int YEARS_MILLIS = 12 * DAY_MILLIS;
+    private static final int YEARS_MILLIS = 12 * MONTHS_MILLIS;
     StringBuffer sb;
 
 

@@ -9,9 +9,7 @@ import com.santosh.miniredditapp.R;
 
 import java.io.Serializable;
 
-/**
- * Created by sb152w on 10/16/17.
- */
+
 
 public class RedditNewsData implements Serializable{
 
