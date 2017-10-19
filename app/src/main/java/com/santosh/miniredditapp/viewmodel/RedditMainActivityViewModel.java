@@ -35,6 +35,10 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
         this.loadmoreRedditItemsModel = loadmoreRedditItemsModel;
     }
 
+    /**
+     * This method is invoked at first launch, fetches data from the first page with page limit 10.
+     * An empty "after" is passed as the query param.
+     */
     public void fetchRedditNewsFirstPage(){
         compositeDisposable.add(redditAPIService.makeRedditNewsCall(EMPTY_AFTER, PAGE_LIMIT)
                 .subscribeOn(Schedulers.io())
@@ -44,6 +48,13 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
                         throwable ->view.error()));
     }
 
+    /**
+     * This method is called to fetch data for the susequent pages.
+     * As user scroll through the app, this call is invoked.
+     * @param after
+     * @param limit
+     */
+
     public void fetchRedditNewsSubsequentPages(String after, String limit){
         compositeDisposable.add(redditAPIService.makeRedditNewsCall(after, limit)
                                 .subscribeOn(Schedulers.io())
@@ -52,6 +63,12 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
                                                 loadMoreNewsItems(redditNewResponse,redditNewResponse.getRedditResponseData().getAfter()),
                                         throwable ->view.error()));
     }
+
+    /**
+     * This method is repsonsible for saving new items to model class (LoadMoreRedditItemsModel)
+     * @param responseList
+     * @param after
+     */
 
     public void loadMoreNewsItems(RedditNewsResponse responseList, String after){
 
