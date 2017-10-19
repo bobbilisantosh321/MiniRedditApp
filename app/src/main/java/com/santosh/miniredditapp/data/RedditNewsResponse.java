@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class RedditNewResponse implements Serializable{
+public class RedditNewsResponse implements Serializable{
 
     @SerializedName("data")
     private RedditResponseData redditResponseData;

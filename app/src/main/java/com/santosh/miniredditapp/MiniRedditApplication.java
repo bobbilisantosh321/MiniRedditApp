@@ -17,6 +17,7 @@ public class MiniRedditApplication extends Application {
         super.onCreate();
         buildComponentGraph();
         if(BuildConfig.DEBUG){
+            //Timber is a logging tool with a small, extensible API which provides utility on top of Android's normal Log class.
             Timber.plant(new Timber.DebugTree());
         }
     }

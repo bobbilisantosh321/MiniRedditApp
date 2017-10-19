@@ -10,6 +10,9 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+/**
+ * In the @Component annotation the modules are specified which are used to create the implementation of the component.
+ */
 @ApplicationScope
 @Component(
 

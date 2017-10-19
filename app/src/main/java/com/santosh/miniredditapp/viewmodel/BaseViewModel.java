@@ -2,7 +2,10 @@ package com.santosh.miniredditapp.viewmodel;
 
 import io.reactivex.disposables.CompositeDisposable;
 
-
+/**
+ * All view models must extend this base class
+ * @param <T>
+ */
 
 public class BaseViewModel<T extends IView> {
 
@@ -21,6 +24,9 @@ public class BaseViewModel<T extends IView> {
         view = null;
     }
 
+    /**
+     *  Using clear will clear all disposables
+     */
     public void clearSubscriptions() {
         compositeDisposable.clear();
     }

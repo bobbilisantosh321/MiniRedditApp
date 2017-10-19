@@ -1,13 +1,20 @@
 package com.santosh.miniredditapp.viewmodel;
 
 
-import com.santosh.miniredditapp.data.RedditNewResponse;
+import com.santosh.miniredditapp.data.RedditNewsResponse;
 
 
 public interface RedditMainActivityView extends IView {
 
-    void load(RedditNewResponse newsItems);
+    /**
+     * load(newItems) is used to update the views for the first page
+     * @param newsItems
+     */
+    void load(RedditNewsResponse newsItems);
 
+    /**
+     * loadMore() is triggered when user scroll beyound one page (first 10 items in this case)
+     */
     void loadMore();
 
 }

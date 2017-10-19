@@ -1,21 +1,21 @@
 package com.santosh.miniredditapp.model;
 
-import com.santosh.miniredditapp.data.RedditNewResponse;
+import com.santosh.miniredditapp.data.RedditNewsResponse;
 
-import javax.inject.Inject;
-
-
+/**
+ * Model class to save all the RedditNewsResponse items as we scroll through the list
+ */
 public class LoadMoreRedditItemsModel implements ILoadmoreRedditItemsModel {
 
-    RedditNewResponse redditNewResponse;
+    RedditNewsResponse redditNewsResponse;
 
     @Override
-    public RedditNewResponse getMoreRedditItems() {
-        return redditNewResponse;
+    public RedditNewsResponse getMoreRedditItems() {
+        return redditNewsResponse;
     }
 
     @Override
-    public void setMoreRedditItems(RedditNewResponse redditItems) {
-        this.redditNewResponse = redditItems;
+    public void setMoreRedditItems(RedditNewsResponse redditItems) {
+        this.redditNewsResponse = redditItems;
     }
 }

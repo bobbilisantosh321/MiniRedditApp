@@ -15,7 +15,7 @@ public class OnClickHandler {
     private final String SELF_THUMBNAIL = "self";
 
     /**
-     * This class provides the logs for onclick of thumbnail.
+     * This class provides the logic for onclick of thumbnail.
      * @param redditNewsData
      * @param context
      */

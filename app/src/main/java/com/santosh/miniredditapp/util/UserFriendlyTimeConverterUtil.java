@@ -1,22 +1,10 @@
 package com.santosh.miniredditapp.util;
 
+/**
+ * Util class to convert EPOCH time to human readable time
+ */
+
 public class UserFriendlyTimeConverterUtil {
-
-    //Util class to convert EPOCH time to human readable time
-
-    private static UserFriendlyTimeConverterUtil instance;
-
-    private UserFriendlyTimeConverterUtil() {
-    }
-
-    public static UserFriendlyTimeConverterUtil getInstance() {
-
-        if(instance == null){
-            instance = new UserFriendlyTimeConverterUtil();
-        }
-
-        return instance;
-    }
 
     private static final int SECOND_MILLIS = 1000;
     private static final int MINUTE_MILLIS = 60 * SECOND_MILLIS;
@@ -27,6 +15,25 @@ public class UserFriendlyTimeConverterUtil {
     StringBuffer sb;
 
 
+    private static UserFriendlyTimeConverterUtil instance;
+
+    private UserFriendlyTimeConverterUtil() {
+    }
+
+    public static UserFriendlyTimeConverterUtil getInstance() {
+
+        if (instance == null) {
+            instance = new UserFriendlyTimeConverterUtil();
+        }
+
+        return instance;
+    }
+
+    /**
+     * Converts EPOC time to "x hours ago" format
+     * @param time
+     * @return
+     */
     public String getTimeAgo(long time) {
         if (time < 1000000000000L) {
             // if timestamp given in seconds, convert to millis
@@ -54,25 +61,28 @@ public class UserFriendlyTimeConverterUtil {
             sb.append(diff / HOUR_MILLIS + " hours ago");
         } else if (diff < 48 * HOUR_MILLIS) {
             sb.append("yesterday");
-        } else if(diff > 2* DAY_MILLIS){
+        } else if (diff > 2 * DAY_MILLIS) {
             sb.append(diff / DAY_MILLIS + " days ago");
-        } else if(diff == MONTHS_MILLIS){
+        } else if (diff == MONTHS_MILLIS) {
             sb.append("a month ago");
-        } else if(diff > MONTHS_MILLIS){
-            sb.append(diff/MONTHS_MILLIS + " months ago");
-        } else if(diff == YEARS_MILLIS){
+        } else if (diff > MONTHS_MILLIS) {
+            sb.append(diff / MONTHS_MILLIS + " months ago");
+        } else if (diff == YEARS_MILLIS) {
             sb.append("a year ago");
-        } else if(diff > YEARS_MILLIS){
-            sb.append(diff/YEARS_MILLIS + " years ago");
-        }
-        else {
-            sb.append(diff/YEARS_MILLIS + " years" + diff/MONTHS_MILLIS + " months ago");
+        } else if (diff > YEARS_MILLIS) {
+            sb.append(diff / YEARS_MILLIS + " years ago");
+        } else {
+            sb.append(diff / YEARS_MILLIS + " years" + diff / MONTHS_MILLIS + " months ago");
         }
 
         return sb.toString();
     }
 
-    public Long getCurrentTime(){
+    /**
+     * @return current time
+     */
+
+    public Long getCurrentTime() {
 
         long currentTime = System.currentTimeMillis();
 

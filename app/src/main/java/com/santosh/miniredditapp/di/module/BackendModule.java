@@ -18,9 +18,19 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Module class deals with backend networking the the app.
+ */
 @Module
 public class BackendModule {
 
+    /**
+     * provideRedditApi() will be called every time while setting up a Retrofit interface.
+     * @param context
+     * @param okHttpClient
+     * @param gsonConverterFactory
+     * @return
+     */
     @Provides
     @ApplicationScope
     RedditAPIService provideRedditApi(@ForApplication Context context, OkHttpClient okHttpClient, GsonConverterFactory gsonConverterFactory){

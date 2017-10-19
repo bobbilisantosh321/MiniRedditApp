@@ -8,7 +8,7 @@ import com.santosh.miniredditapp.BaseActivity;
 import com.santosh.miniredditapp.MiniRedditApplication;
 import com.santosh.miniredditapp.R;
 import com.santosh.miniredditapp.adapter.RedditNewsAdapter;
-import com.santosh.miniredditapp.data.RedditNewResponse;
+import com.santosh.miniredditapp.data.RedditNewsResponse;
 import com.santosh.miniredditapp.databinding.ActivityRedditMainBinding;
 import com.santosh.miniredditapp.model.ILoadmoreRedditItemsModel;
 import com.santosh.miniredditapp.network.RedditAPIService;
@@ -16,18 +16,17 @@ import com.santosh.miniredditapp.viewmodel.RedditMainActivityView;
 import com.santosh.miniredditapp.viewmodel.RedditMainActivityViewModel;
 
 import javax.inject.Inject;
-import io.reactivex.disposables.CompositeDisposable;
 
 public class RedditMainActivity extends BaseActivity<ActivityRedditMainBinding,RedditMainActivityViewModel> implements CallNextPageListener, RedditMainActivityView {
 
-    private RedditNewResponse redditNewResponse;
-    private CompositeDisposable mainActivityCompositeDisposable;
+    private RedditNewsResponse redditNewsResponse;
     private String REDDIT_NEWS_KEY = "REDDIT_NEWS_KEY";
     private String PAGE_LIMIT = "10";
 
     RedditNewsAdapter redditNewsAdapter;
     LinearLayoutManager layoutManager;
 
+    //this will basically call new RedditAPIService();
     @Inject
     RedditAPIService redditAPIService;
 
@@ -38,7 +37,6 @@ public class RedditMainActivity extends BaseActivity<ActivityRedditMainBinding,R
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MiniRedditApplication) getApplication()).getAppComponent().inject(this);
-        mainActivityCompositeDisposable = new CompositeDisposable();
 
         viewModel = new RedditMainActivityViewModel(redditAPIService,loadmoreRedditItemsModel);
         viewModel.attach(this);
@@ -51,10 +49,13 @@ public class RedditMainActivity extends BaseActivity<ActivityRedditMainBinding,R
         binding.redditNewsRecyclerView.setLayoutManager(layoutManager);
         binding.redditNewsRecyclerView.setAdapter(redditNewsAdapter);
 
+        //Restoring the data on orientation changes
         if(savedInstanceState != null && savedInstanceState.containsKey(REDDIT_NEWS_KEY) ){
-            redditNewResponse = (RedditNewResponse) savedInstanceState.getSerializable(REDDIT_NEWS_KEY);
-            load(redditNewResponse);
+            redditNewsResponse = (RedditNewsResponse) savedInstanceState.getSerializable(REDDIT_NEWS_KEY);
+            load(redditNewsResponse);
         }else{
+            //First launch network call is made to fetch data with empty  "after" value in the request.
+            // This gives back the data in first page with limit "10"
             viewModel.fetchRedditNewsFirstPage();
         }
     }
@@ -62,29 +63,40 @@ public class RedditMainActivity extends BaseActivity<ActivityRedditMainBinding,R
     @Override
     protected void onStop() {
         super.onStop();
-        if (mainActivityCompositeDisposable != null && !mainActivityCompositeDisposable.isDisposed()) {
-            mainActivityCompositeDisposable.dispose();
-        }
     }
+
+    /**
+     * Restoring the data on orientation changes
+     * @param outState
+     */
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if(redditNewResponse != null){
-            outState.putSerializable(REDDIT_NEWS_KEY,redditNewResponse);
+        if(redditNewsResponse != null){
+            outState.putSerializable(REDDIT_NEWS_KEY, redditNewsResponse);
         }
     }
 
 
+    /**
+     * When user reaches 10th item on the list, this is triggered.
+     * Fetches subsequent pages passing "after" value from the Reddit respone.
+     * @param redditNewsResponse
+     */
     @Override
-    public void callNextPage(RedditNewResponse redditNewResponse) {
+    public void callNextPage(RedditNewsResponse redditNewsResponse) {
         binding.setIsLoading(true);
         viewModel.fetchRedditNewsSubsequentPages(loadmoreRedditItemsModel.getMoreRedditItems().getRedditResponseData().getAfter(),PAGE_LIMIT);
     }
 
+    /**
+     * load(newItems) is used to update the views for the first page
+     * @param newsItems
+     */
     @Override
-    public void load(RedditNewResponse newsItems) {
-        redditNewResponse = newsItems;
+    public void load(RedditNewsResponse newsItems) {
+        redditNewsResponse = newsItems;
         binding.setIsLoading(false);
         redditNewsAdapter.setRedditNewResponse(newsItems.getRedditResponseData().getRedditChildrenResponseList());
 
@@ -95,11 +107,14 @@ public class RedditMainActivity extends BaseActivity<ActivityRedditMainBinding,R
 
     }
 
+    /**
+     * loadMore() is triggered when user scroll beyound one page (first 10 items in this case)
+     */
     @Override
     public void loadMore() {
         if(loadmoreRedditItemsModel != null){
             binding.setIsLoading(false);
-            redditNewResponse = loadmoreRedditItemsModel.getMoreRedditItems();
+            redditNewsResponse = loadmoreRedditItemsModel.getMoreRedditItems();
             redditNewsAdapter.setRedditNewResponse(loadmoreRedditItemsModel.getMoreRedditItems().getRedditResponseData().getRedditChildrenResponseList());
         }
     }

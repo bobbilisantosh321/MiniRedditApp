@@ -1,13 +1,16 @@
 package com.santosh.miniredditapp.model;
 
 
-import com.santosh.miniredditapp.data.RedditNewResponse;
+import com.santosh.miniredditapp.data.RedditNewsResponse;
 
+/**
+ * Interface model to save all the RedditNewsResponse items as we scroll through the list
+ */
 
 public interface ILoadmoreRedditItemsModel {
 
-    RedditNewResponse getMoreRedditItems();
+    RedditNewsResponse getMoreRedditItems();
 
-    void setMoreRedditItems(RedditNewResponse redditItems);
+    void setMoreRedditItems(RedditNewsResponse redditItems);
 
 }

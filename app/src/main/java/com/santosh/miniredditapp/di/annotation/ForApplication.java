@@ -8,7 +8,9 @@ import javax.inject.Scope;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-
+/**
+ * @Qualifier annotation helps us to create “tags” for dependencies which have the same interface.
+ */
 @Qualifier
 @Retention(RUNTIME)
 public @interface ForApplication {

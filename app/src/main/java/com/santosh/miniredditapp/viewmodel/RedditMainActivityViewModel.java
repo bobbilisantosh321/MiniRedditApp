@@ -1,7 +1,7 @@
 package com.santosh.miniredditapp.viewmodel;
 
 import com.santosh.miniredditapp.data.RedditChildrenResponseData;
-import com.santosh.miniredditapp.data.RedditNewResponse;
+import com.santosh.miniredditapp.data.RedditNewsResponse;
 import com.santosh.miniredditapp.model.ILoadmoreRedditItemsModel;
 import com.santosh.miniredditapp.network.RedditAPIService;
 
@@ -22,6 +22,13 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
     @Inject
     public ILoadmoreRedditItemsModel loadmoreRedditItemsModel;
 
+    /**
+     * With the @Inject annotation on the constructor,
+     * we instruct Dagger that an object of this class can be injected into other objects.
+     * Dagger automatically calls this constructor, if an instance of this class is requested.
+     * @param redditAPIService
+     * @param loadmoreRedditItemsModel
+     */
     @Inject
     public RedditMainActivityViewModel(RedditAPIService redditAPIService, ILoadmoreRedditItemsModel loadmoreRedditItemsModel) {
         this.redditAPIService = redditAPIService;
@@ -46,13 +53,13 @@ public class RedditMainActivityViewModel extends BaseViewModel<RedditMainActivit
                                         throwable ->view.error()));
     }
 
-    public void loadMoreNewsItems(RedditNewResponse responseList, String after){
+    public void loadMoreNewsItems(RedditNewsResponse responseList, String after){
 
         if(after.isEmpty()){
             loadmoreRedditItemsModel.setMoreRedditItems(responseList);
             view.load(responseList);
         }else if(responseList.getRedditResponseData().getRedditChildrenResponseList().size() > 0){
-            RedditNewResponse response = loadmoreRedditItemsModel.getMoreRedditItems();
+            RedditNewsResponse response = loadmoreRedditItemsModel.getMoreRedditItems();
             List<RedditChildrenResponseData> redditChildrenResponseDataList = response.getRedditResponseData().getRedditChildrenResponseList();
             redditChildrenResponseDataList.addAll(responseList.getRedditResponseData().getRedditChildrenResponseList());
             loadmoreRedditItemsModel.setMoreRedditItems(response);

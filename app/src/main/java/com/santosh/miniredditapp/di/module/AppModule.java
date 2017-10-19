@@ -24,7 +24,7 @@ public class AppModule {
         this.miniRedditApplication = miniRedditApplication;
     }
 
-    @Provides
+    @Provides //This annotation means that method below provides dependency
     @ForApplication
     @ApplicationScope
     Context provideApplicationContext(){
