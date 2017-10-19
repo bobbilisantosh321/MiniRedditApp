@@ -4,8 +4,10 @@ import android.content.Context;
 
 import com.santosh.miniredditapp.MiniRedditApplication;
 import com.santosh.miniredditapp.di.annotation.ForApplication;
+import com.santosh.miniredditapp.model.ILoadmoreRedditItemsModel;
+import com.santosh.miniredditapp.model.LoadMoreRedditItemsModel;
 import com.santosh.miniredditapp.network.RedditAPIService;
-import com.santosh.miniredditapp.presenter.RedditHomePresenter;
+import com.santosh.miniredditapp.viewmodel.RedditMainActivityViewModel;
 
 import javax.inject.Singleton;
 
@@ -30,7 +32,14 @@ public class AppModule {
 
     @Provides
     @Singleton
-    RedditHomePresenter provideMainPresenter(RedditAPIService redditAPIService){
-        return new RedditHomePresenter(redditAPIService);
+    ILoadmoreRedditItemsModel provideLoadMoreRedditItemsModel(){
+        return new LoadMoreRedditItemsModel();
     }
+
+    @Provides
+    @Singleton
+    RedditMainActivityViewModel provideMainActivityViewModel(RedditAPIService redditAPIService, ILoadmoreRedditItemsModel loadmoreRedditItemsModel){
+        return new RedditMainActivityViewModel(redditAPIService,loadmoreRedditItemsModel);
+    }
+
 }

@@ -5,7 +5,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.example.sekharn.trafficincidents"
+        applicationId "com.example.santosh.minireddit"
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
@@ -29,6 +29,10 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -57,6 +61,9 @@ dependencies {
 
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+
+    compile 'io.reactivex:rxjava:1.2.5'
+    compile 'io.reactivex:rxandroid:1.2.1'
 
     //GooglePlayServices
     compile 'com.google.android.gms:play-services:11.0.2'

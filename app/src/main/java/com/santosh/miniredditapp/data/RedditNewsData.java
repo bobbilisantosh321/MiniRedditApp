@@ -1,6 +1,11 @@
 package com.santosh.miniredditapp.data;
 
+import android.databinding.BindingAdapter;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
 import com.google.gson.annotations.SerializedName;
+import com.santosh.miniredditapp.R;
 
 import java.io.Serializable;
 
@@ -75,4 +80,5 @@ public class RedditNewsData implements Serializable{
     public void setUrl(String url) {
         this.url = url;
     }
+
 }
