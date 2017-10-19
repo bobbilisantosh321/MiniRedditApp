@@ -29,7 +29,7 @@ public class OnClickHandler {
         //As per the requirement: for those having a picture (besides the thumbnail) ,
         // please allow the user to tap on the thumbnail to be sent to the full sized picture
         // (so just opening the URL would be OK).
-        // ASSUMPTION: Assuming thumbnails with data "self" are not clickable. Must click on the imageview, NOT list item.
+        // ASSUMPTION: Assuming thumbnails with data "self" are not clickable.
         if(redditNewsData != null && !SELF_THUMBNAIL.equalsIgnoreCase(redditNewsData.getThumbnail())){
             String url = redditNewsData.getUrl();
             Intent openUrlIntent = new Intent(Intent.ACTION_VIEW);

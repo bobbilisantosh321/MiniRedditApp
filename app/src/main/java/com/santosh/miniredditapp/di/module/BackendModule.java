@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.santosh.miniredditapp.R;
 import com.santosh.miniredditapp.di.annotation.ForApplication;
+import com.santosh.miniredditapp.di.scope.ApplicationScope;
 import com.santosh.miniredditapp.network.RedditAPIService;
 
 import javax.inject.Singleton;
@@ -21,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BackendModule {
 
     @Provides
-    @Singleton
+    @ApplicationScope
     RedditAPIService provideRedditApi(@ForApplication Context context, OkHttpClient okHttpClient, GsonConverterFactory gsonConverterFactory){
 
         OkHttpClient.Builder httpClient = okHttpClient.newBuilder();
@@ -50,13 +51,13 @@ public class BackendModule {
 
 
     @Provides
-    @Singleton
+    @ApplicationScope
     OkHttpClient provideOkHttpClient(){
         return new OkHttpClient();
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     GsonConverterFactory providesGsonConverterFactory(){
         return GsonConverterFactory.create();
     }

@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.santosh.miniredditapp.MiniRedditApplication;
 import com.santosh.miniredditapp.di.annotation.ForApplication;
+import com.santosh.miniredditapp.di.scope.ApplicationScope;
 import com.santosh.miniredditapp.model.ILoadmoreRedditItemsModel;
 import com.santosh.miniredditapp.model.LoadMoreRedditItemsModel;
 import com.santosh.miniredditapp.network.RedditAPIService;
@@ -25,19 +26,19 @@ public class AppModule {
 
     @Provides
     @ForApplication
-    @Singleton
+    @ApplicationScope
     Context provideApplicationContext(){
         return  miniRedditApplication.getBaseContext();
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     ILoadmoreRedditItemsModel provideLoadMoreRedditItemsModel(){
         return new LoadMoreRedditItemsModel();
     }
 
     @Provides
-    @Singleton
+    @ApplicationScope
     RedditMainActivityViewModel provideMainActivityViewModel(RedditAPIService redditAPIService, ILoadmoreRedditItemsModel loadmoreRedditItemsModel){
         return new RedditMainActivityViewModel(redditAPIService,loadmoreRedditItemsModel);
     }
